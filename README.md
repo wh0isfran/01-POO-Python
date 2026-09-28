@@ -11,5 +11,5 @@
 
 ### comandos para guardar:
 ### 1- git add .
-### 2- git comit -n ¨avance clase paciente¨
+### 2- git commit -n ¨avance clase paciente¨
 ### 3- git push origin main
