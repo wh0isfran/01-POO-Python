@@ -10,7 +10,9 @@ class Departamento:
 
     @id_departamento.setter
     def id_departamento(self,id_departamento:int)-> None:
-        self._id_departamento = id_departamento 
+        if not isinstance(id_departamento, int):
+            raise ValueError("El ID debe ser mayor a 1.")
+        self._id_departamento = id_departamento
 
     @property
     def nombre(self)-> str:
@@ -18,7 +20,9 @@ class Departamento:
     
     @nombre.setter
     def nombre(self,nombre:str)-> None:
-        self._nombre = nombre
+        if not isinstance(nombre,str) or len(nombre.strip()) < 2:
+            raise ValueError("El nombre no puede tener menos de 2 caracteres.")
+        self._nombre = nombre.strip().upper()
 
     @property
     def piso(self)-> int:
@@ -26,6 +30,10 @@ class Departamento:
     
     @piso.setter
     def piso(self,piso:int)-> None:
+        if not isinstance(piso, int):
+            raise TypeError("El piso debe ser un número entero.")
+        if piso < 0 or piso > 10:
+            raise ValueError("El número de piso debe corresponder a los números de los pisos dentro del edificio.")
         self._piso = piso
 
     def __str__(self)-> str:
