@@ -12,18 +12,19 @@ def leer_numero(mensaje:str)->int:
         except ValueError:
             print("Error: Debe ingresar un número entero.")
 
-def menu_principal():
+def menu():
     print("="*20)
-    print("Menú Principal")
+    print("Menú Clínica")
     print("="*20)
-    print("1.- Menú Pacientes")
-    print("2.- Menú Departamentos")
-    print("3.- Salir")
+    print("1.- Agregar paciente")
+    print("2.- Editar paciente")
+    print("3.- Eliminar paciente")
+    print("4.- Mostrar un paciente")
+    print("5.- Mostrar todos los pacientes")
+    print("0.- Salir")
     op=leer_numero("Ingrese una opción: ")
     print("="*20)
     return op
-
-
 
 def agregar_paciente()-> None:
     rut=input("Ingrese RUT del paciente: ")
@@ -43,10 +44,12 @@ def agregar_paciente()-> None:
         prevision="Particular"
     elif op==4:
         prevision="Otro"
+    else:
+        prevision=""
 
     try:
         paciente=Paciente(rut,nombre,edad,prevision)
-    except (ValueError, TypeError) as e:
+    except (ValueError,TypeError) as e:
         print(f"Error al crear el paciente: {e}")
         return
     pacientes.append(paciente)  
@@ -93,25 +96,30 @@ def editar_paciente()->None:
         print("3.- Editar previsión")
         print("0.- Salir")
         op=leer_numero("Ingrese una opción: ")
-        try:
-            if op==1:
-                nombre_nuevo=input("Ingrese nuevo nombre: ")
-                try:
-                    paciente.nombre=nombre_nuevo
-                except (ValueError) as e:
-                    return
-                print("Nombre actualizado")
-            elif op==2:
-                edad_nueva=leer_numero("Ingrese nueva edad: ")
+        if op==1:
+            nombre_nuevo=input("Ingrese nuevo nombre: ")
+            try:
+                paciente.nombre=nombre_nuevo
+            except ValueError as e:
+                print(f"Error al actualizar el nombre: {e}")
+                return
+            print("Nombre actualizado")
+        elif op==2:
+            edad_nueva=leer_numero("Ingrese nueva edad: ")
+            try:
                 paciente.edad=edad_nueva
-                print("Edad actualizada")
-            elif op==3:
-                print("Tipos de previsión: ")
-                print("1.- Fonasa")
-                print("2.- Isapre")
-                print("3.- Particular")
-                print("4.- Otro")
-                op=leer_numero("Seleccione una previsión: ")
+            except (ValueError, TypeError) as e:
+                print(f"Error al actualizar la edad: {e}")
+                return
+            print("Edad actualizada")
+        elif op==3:
+            print("Tipos de previsión: ")
+            print("1.- Fonasa")
+            print("2.- Isapre")
+            print("3.- Particular")
+            print("4.- Otro")
+            op=leer_numero("Seleccione una previsión: ")        
+            try:
                 if op==1:
                     paciente.prevision="Fonasa"
                     print("Previsión actualizada")
@@ -124,32 +132,43 @@ def editar_paciente()->None:
                 elif op==4:
                     paciente.prevision="Otro"
                     print("Previsión actualizada")
-        except (ValueError, TypeError) as e:
-                print(f"Error al actualizar la previsión {e}")
-                
-        else:
+            except (ValueError, TypeError) as e:
+                print(f"Error al actualizar la previsión: {e}")
+                return
+            else:
                 print("Opción inválida")
     else:
-            print("No se encontró el paciente.")
+        print("No se encontró el paciente.")
 
-def menu_paciente():
-    print("="*20)
-    print("Menú Clínica")
-    print("="*20)
-    print("1.- Agregar paciente")
-    print("2.- Editar paciente")
-    print("3.- Eliminar paciente")
-    print("4.- Mostrar un paciente")
-    print("5.- Mostrar todos los pacientes")
-    print("0.- Salir")
-    op == leer_numero("Ingrese una opción")
-    try:
-        if op == 1:
+def main():
+
+    while True:
+        opcion=menu()
+        if opcion==1:
+            print("Agregar paciente")
             agregar_paciente()
-        elif op == 2:
+        elif opcion==2:
+            print("Editar paciente")
             editar_paciente()
-    except:
-        
+        elif opcion==3:
+            print("Eliminar paciente")
+            eliminar_paciente()
+        elif opcion==4:
+            print("Mostrar un paciente")
+            imprimir_paciente()
+        elif opcion==5:
+            print("Mostrar todos los pacientes")
+            imprimir_pacientes()
+        elif opcion==0:
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción inválida. Intente nuevamente.")
+    
+
+
+if __name__=="__main__":
+    main()
   
 
 from departamento import Departamento
