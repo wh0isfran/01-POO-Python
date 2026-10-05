@@ -29,8 +29,16 @@ class Database:
         conn = self.get_connection()
         try:
             cursor: Cursor = conn.cursor()
+            #Tabla Departamento
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS departamento (
+                id_departamento INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                piso INTEGER NOT NULL
+                )
+            """)
 
-            #Tabla departmaento
+            #Tabla Paciente
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS paciente(
                     rut TEXT PRIMARY KEY,
