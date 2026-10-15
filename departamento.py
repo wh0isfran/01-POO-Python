@@ -1,44 +1,41 @@
 class Departamento:
-    def __init__(self, id_departamento:int, nombre:str, piso:int):
-            self.id_departamento = id_departamento
-            self.nombre=nombre
-            self.piso=piso
+    """
+    Modelo (DTO) para la entidad Departamento.
+    Atributos:
+    - id_departamento (int | None): Identificador único del departamento en BD.
+    - nombre (str): Nombre del departamento (e.g. Pediatría, Urgencias).
+    - piso (int): Piso donde se ubica el departamento.
+    """
+
+    def __init__(self, nombre: str, piso: int, id_departamento: int | None = None):
+        self.id_departamento = id_departamento
+        self.nombre = nombre
+        self.piso = piso
 
     @property
-    def id_departamento(self)-> int:
-        return self._id_departamento
-
-    @id_departamento.setter
-    def id_departamento(self,id_departamento:int)-> None:
-        if not isinstance(id_departamento, int):
-            raise ValueError("El ID debe ser mayor a 1.")
-        self._id_departamento = id_departamento
-
-    @property
-    def nombre(self)-> str:
+    def nombre(self) -> str:
         return self._nombre
-    
+
     @nombre.setter
-    def nombre(self,nombre:str)-> None:
-        if not isinstance(nombre,str) or len(nombre.strip()) < 2:
-            raise ValueError("El nombre no puede tener menos de 2 caracteres.")
-        self._nombre = nombre.strip().upper()
+    def nombre(self, valor: str) -> None:
+        if not isinstance(valor, str) or len(valor.strip()) < 3:
+            raise ValueError("El nombre del departamento debe tener al menos 3 caracteres.")
+        self._nombre = valor.strip().title()
 
     @property
-    def piso(self)-> int:
+    def piso(self) -> int:
         return self._piso
-    
+
     @piso.setter
-    def piso(self,piso:int)-> None:
-        if not isinstance(piso, int):
+    def piso(self, valor: int) -> None:
+        if not isinstance(valor, int):
             raise TypeError("El piso debe ser un número entero.")
-        if piso < 0 or piso > 10:
-            raise ValueError("El número de piso debe corresponder a los números de los pisos dentro del edificio.")
-        self._piso = piso
+        self._piso = valor
 
-    def __str__(self)-> str:
-        return f"Información del departamento:\nID_Departamento: {self.id_departamento}\nNombre: {self.nombre}\nPiso: {self.piso}"
+    def __str__(self) -> str:
+        id_str = self.id_departamento if self.id_departamento is not None else 'Sin asignar'
+        return f"Departamento [ID: {id_str}] | Nombre: {self.nombre} | Piso: {self.piso}"
 
-    def __repr__(self)-> str:
-        return f"Departamento(id_departamento='{self.id_departamento}', nombre='{self.nombre}', piso='{self.piso}')"
+    def __repr__(self) -> str:
+        return f"Departamento(id_departamento={self.id_departamento}, nombre='{self.nombre}', piso={self.piso})"
          
